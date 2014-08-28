@@ -123,7 +123,12 @@ def repo(repo_name):
     tags = _query("/repositories/%s/tags" % repo_name)
     properties = _query("/repositories/%s/properties" % repo_name)
     sorted_images = _build_image_tree(images)
-    return render_template('repo.html', name=repo_name,
+    inv_tags = {}
+    for tag,image_id in tags.items():
+      if image_id not in inv_tags.keys():
+        inv_tags[image_id] = []
+      inv_tags[image_id].append(tag)
+    return render_template('repo.html', name=repo_name, inv_tags=inv_tags,
         results=result, images=sorted_images, tags=tags, properties=properties)
 
 @app.template_filter()

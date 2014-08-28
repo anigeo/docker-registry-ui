@@ -13,7 +13,9 @@
 <ul class="nav nav-tabs" role="tablist">
   <li class="active"><a href="#summary" role="tab" data-toggle="tab">Summary</a></li>
   <li><a href="#config" role="tab" data-toggle="tab">Config</a></li>
+  {%- if files %}
   <li><a href="#files" role="tab" data-toggle="tab">Files ({{files|length}})</a></li>
+  {%- endif %}
 </ul>
 
 <!-- Tab panes -->
@@ -63,6 +65,7 @@
       </ul>
       {%- endif %}
   </div>
+  {%- if files %}
   <div class="tab-pane" id="files">
     <table class="table table-condensed table-striped">
     <tr>
@@ -89,6 +92,7 @@
     {%- endfor %}
     </table>
   </div>
+  <%- endif %}
 </div>
 {% endblock %}
 {% block js %}

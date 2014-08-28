@@ -30,7 +30,7 @@
   <div class="tab-pane" id="images">
     <ol>
       {%- for image in images %}
-      <li><a href="/images/{{ image.id }}/{{ name }}">{{ image.id }}</a></li>
+      <li><a href="/images/{{ image.id }}/{{ name }}" class="monospace">{{ image.id }}</a>{%- if image.id in inv_tags %}{%- for inv_tag in inv_tags[image.id] %} <kbd>{{ inv_tag }}</kbd>{%- endfor %}{%- endif %}
       {%- endfor %}
     </ol>
   </div>
@@ -44,7 +44,7 @@
   <div class="tab-pane" id="properties">
     <ul>
       {%- for key, value in properties.iteritems() %}
-      <li><b>{{ key }}</b>: {{ value }}</li>
+      <li><kbd><a href="/images/{{ tags[tag] }}/{{ name }}" class="monospace">{{ tags[tag] }}</a></kbd> {{ tag }}</li>
       {%- endfor %}
     </ul>
   </div>
