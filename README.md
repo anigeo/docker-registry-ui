@@ -11,14 +11,14 @@ Browse to ```http://localhost:8080``` to begin using.
 
 ## Environment
 
-### REGISTRY_URL
-URL of private registry
-Default: ```http://localhost:5000```
+* **REGISTRY_URL**
+<br/>URL of private registry
+<br/>Default: ```http://localhost:5000```
 
-### API_VERSION
-API version
-Default: ```v1```
+* **API_VERSION**
+<br/>API version
+<br/>Default: ```v1```
 
-### DEBUG
-Toggle debug mode
-Default: ```False```
+* **DEBUG**
+<br/>Toggle debug mode
+<br/>Default: ```False```
