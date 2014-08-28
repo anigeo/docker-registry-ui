@@ -30,7 +30,7 @@
   <div class="tab-pane" id="images">
     <ol>
       {%- for image in images %}
-      <li><a href="/images/{{ image.id }}/{{ name }}" class="monospace">{{ image.id }}</a>{%- if image.id in inv_tags %}{%- for inv_tag in inv_tags[image.id] %} <kbd>{{ inv_tag }}</kbd>{%- endfor %}{%- endif %}
+      <li><a href="/images/{{ image.id }}/{{ name }}" class="monospace">{{ image.id }}</a>{%- if image.id in inv_tags %}{%- for inv_tag in inv_tags[image.id] %} <kbd>{{ inv_tag }}</kbd>{%- endfor %}{%- endif %}</li>
       {%- endfor %}
     </ol>
   </div>
