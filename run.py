@@ -2,14 +2,32 @@ import urllib2
 import json
 import tarfile
 import re
+from os import environ
 from datetime import datetime
 
+import dateutil.parser
 from flask import Flask
 from flask import render_template
 from flask import request
 
+if environ.get("REGISTRY_URL"):
+    REGISTRY_URL = environ.get("REGISTRY_URL")
+else:
+    REGISTRY_URL = 'http://localhost:5000'
+
+if environ.get("API_VERSION"):
+    API_VERSION = environ.get("API_VERSION")
+else:
+    API_VERSION = 'v1'
+
+if environ.get("DEBUG"):
+    DEBUG =  environ.get("DEBUG")
+else:
+    DEBUG = False
+
 app = Flask(__name__)
-app.debug = True
+app.config.from_object(__name__)
+app.debug = app.config['DEBUG']
 
 FILE_TYPES = {
     'f':'file',
@@ -26,8 +44,11 @@ FILE_TYPES = {
 }
 
 def _query(path):
-    response = urllib2.urlopen("http://localhost/v1" + str(path))
-    result = json.loads(response.read())
+    try:
+        response = urllib2.urlopen(app.config['REGISTRY_URL'] + "/" + app.config['API_VERSION'] + str(path))
+        result = json.loads(response.read())
+    except:
+        result = ''
     return result
 
 def _build_file_dict(files):
@@ -106,9 +127,11 @@ def repo(repo_name):
         results=result, images=sorted_images, tags=tags, properties=properties)
 
 @app.template_filter()
-def datetimefilter(value, format='%Y/%m/%d %H:%M'):
-    value = re.sub(r'[0-9]{2}Z$','', value)
-    d = datetime(*map(int, re.split('[^\d]', value)[:-1]))
+def datetimefilter(value, format='%Y/%m/%d %H:%M:%S %z'):
+    if type(value) is int:
+        d = datetime.fromtimestamp(value)
+    else:
+	d = dateutil.parser.parse(value)
     return d.strftime(format)
 
 @app.template_filter()

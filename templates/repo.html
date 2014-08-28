@@ -24,7 +24,7 @@
   <li><b>Kernel </b>: {{ results.kernel }}</li>
   <li><b>Docker Version </b>: {{ results.docker_version }}</li>
   <li><b>Docker Go Version</b>: {{ results.docker_go_version }}</li>
-  <li><b>Last Update </b>: {{ results.last_update }}</li>
+  <li><b>Last Update </b>: {{ results.last_update | datetimefilter }}</li>
   </ul>
   </div>
   <div class="tab-pane" id="images">
