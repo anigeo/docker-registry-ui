@@ -3,6 +3,11 @@ docker-registry-ui
 
 A simple web UI for browsing private docker registries
 
+## Requirement
+
+* python-flask
+* python-dateutil
+
 ## Usage
 
 Install a private docker registry and ```python run.py``` on the same server.
