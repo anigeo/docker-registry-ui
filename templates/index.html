@@ -21,7 +21,7 @@
       {%- if item.images %}
       <ul>
       {%- for image in item.images %}
-        <li><a href='/images/{{ image.id }}' class="monospace">{{ image.id }}</a></li>
+        <li><samp><a href="/images/{{ image.id }}">{{ image.id }}</a></samp></li>
       {%- endfor %}
       </ul>
       {%- endif %}
