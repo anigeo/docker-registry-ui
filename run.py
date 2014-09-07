@@ -125,19 +125,22 @@ def repo(repo_name):
     sorted_images = _build_image_tree(images)
     inv_tags = {}
     for tag,image_id in tags.items():
-      if image_id not in inv_tags.keys():
-        inv_tags[image_id] = []
-      inv_tags[image_id].append(tag)
+        if image_id not in inv_tags.keys():
+            inv_tags[image_id] = []
+        inv_tags[image_id].append(tag)
     return render_template('repo.html', name=repo_name, inv_tags=inv_tags,
         results=result, images=sorted_images, tags=tags, properties=properties)
 
 @app.template_filter()
 def datetimefilter(value, format='%Y/%m/%d %H:%M:%S %z'):
-    if type(value) is int:
-        d = datetime.fromtimestamp(value)
-    else:
-	d = dateutil.parser.parse(value)
-    return d.strftime(format)
+    try:
+        if type(value) is int:
+            d = datetime.fromtimestamp(value)
+        else:
+            d = dateutil.parser.parse(value)
+        return d.strftime(format)
+    except:
+        return value
 
 @app.template_filter()
 def joinifarray(value):
