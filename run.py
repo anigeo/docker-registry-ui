@@ -10,6 +10,8 @@ from flask import Flask
 from flask import render_template
 from flask import request
 
+from werkzeug.routing import BaseConverter 
+
 if environ.get("REGISTRY_URL"):
     REGISTRY_URL = environ.get("REGISTRY_URL")
 else:
@@ -28,6 +30,13 @@ else:
 app = Flask(__name__)
 app.config.from_object(__name__)
 app.debug = app.config['DEBUG']
+
+class RegexConverter(BaseConverter):
+    def __init__(self, url_map, *items):
+        super(RegexConverter, self).__init__(url_map)
+        self.regex = items[0]
+
+app.url_map.converters['regex'] = RegexConverter
 
 FILE_TYPES = {
     'f':'file',
@@ -116,7 +125,7 @@ def images(image_id, repo_name=None):
     files = _build_file_dict(files_raw)
     return render_template('image.html', results=result, files=files, repo=repo_name)
 
-@app.route("/repo/<repo_name>")
+@app.route('/repo/<regex("(.+)(|/)"):repo_name>')
 def repo(repo_name):
     result = _query("/repositories/%s/json" % repo_name)
     images = _query("/repositories/%s/images" % repo_name)
